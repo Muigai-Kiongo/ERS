@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% include 'components/float_buttons.html' %}
+
+<div class="container">
+    
+    {% include 'components/aside.html' %}
+
+    <div class="main-content">
+
+
+        <span class="user-stats">
+            {{ user.username }} Stats
+        </span>
+
+        <h3 class="report-title">
+            For any Other Kind of Incident Report Here
+        </h3>
+        <a href='/other-reports/' class="report-button">Report</a>
+        
+            
+        
+       
+    </div>
+</div>
+
+<style>
+
+    /* Container styles */
+    .container {
+        display: flex; /* Use flexbox for layout */
+        padding: 20px; /* Padding around the container */
+    }
+
+    /* Main content styles */
+    .main-content {
+        flex: 1; /* Allow main content to take available space */
+        margin-left: 20px; /* Space between aside and main content */
+        background-color: #ffffff; /* White background for main content */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        padding: 20px; /* Padding inside the main content */
+    }
+
+    /* Title styles */
+    .report-title {
+        font-size: 24px; /* Larger font size for the title */
+        margin-bottom: 20px; /* Space below the title */
+        color: #333; /* Dark text color */
+    }
+
+    /* Button styles */
+    .report-button {
+        background-color: #007bff; /* Bootstrap primary color */
+        color: white; /* White text color */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 20px; /* Padding for the button */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth background transition */
+        font-size: 16px; /* Font size for the button */
+    }
+
+    .report-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* User stats styles */
+    .user-stats {
+        display: block; /* Block display for the stats */
+        margin-top: 20px; /* Space above the stats */
+        font-size: 18px; /* Font size for user stats */
+        color: #555; /* Slightly lighter text color */
+    }
+</style>
+{% endblock %}

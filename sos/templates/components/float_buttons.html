@@ -1,0 +1,59 @@
+{% load static %}
+<nav class="nav">
+    <a href="/health-reports/" class="nav-item">
+        <img src="{%static 'img/ambulance.jpg'%}" alt="Hospital" class="nav-icon"/>
+        Hospital
+    </a>
+
+    <a href="/fire-reports/" class="nav-item">
+        <img src="{% static 'img/fire-station.jpg'%}" alt="Firestation" class="nav-icon"/>
+        Firestation
+    </a>
+
+    <a href="/disaster-reports/" class="nav-item">
+        <img src=" {%static 'img/natural-disaster.webp'%}" alt="Natural Disaster" class="nav-icon"/>
+        Natural Disaster
+    </a>
+
+    <a href="/security-reports/" class="nav-item">
+        <img src="{% static 'img/police-badge.jpg' %}" alt="Police" class="nav-icon"/>
+        Police
+    </a>
+</nav>
+
+<style>
+    
+
+    /* Navigation styles */
+    .nav {
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-around; /* Space items evenly */
+        align-items: center; /* Center items vertically */
+        padding: 20px; /* Padding around the nav */
+        background-color: #f4f4f4; /* Light gray background */
+    }
+
+    .nav-item {
+        display: flex; /* Use flexbox for the item */
+        flex-direction: column; /* Stack icon and text vertically */
+        align-items: center; /* Center items horizontally */
+        text-decoration: none; /* Remove underline from links */
+        color: #333; /* Dark text color */
+        padding: 15px; /* Padding around the item */
+        border-radius: 50%; /* Make the button round */
+        background-color: #ffffff; /* White background for buttons */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    }
+
+    .nav-item:hover {
+        background-color: #e0e0e0; /* Change background on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+    .nav-icon {
+        width: 40px; /* Set a fixed width for icons */
+        height: 40px; /* Set a fixed height for icons */
+        margin-bottom: 5px; /* Space between icon and text */
+    }
+</style>

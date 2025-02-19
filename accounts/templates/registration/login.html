@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Emergency Response System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   
+</head>
+<body>
+    
+    {%include 'components/header.html'%}
+
+    <h2 class ='typewriter'>Welcome Back</h2>
+    <main>
+
+        
+
+        <form method="post" class='form-container'>
+            <h2>Login</h2>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>Don't have an Account? <a href="/accounts/register">Register</a></p>
+            <button type="submit" class="logBtn">Login</button>
+        </form>
+    </main>
+
+</body>
+</html>

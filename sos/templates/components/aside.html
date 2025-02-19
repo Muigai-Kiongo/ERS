@@ -1,0 +1,57 @@
+<aside class="sidebar">
+    <ul class="sidebar-menu">
+        <li class="sidebar-item">
+            <a href='/stats/' class="sidebar-link">Stats</a>
+        </li>
+        <li class="sidebar-item">
+            <a href='/history/' class="sidebar-link">History</a>
+        </li>
+        <li class="sidebar-item">
+            <a href='/first-aid/' class="sidebar-link">First Aid</a>
+        </li>
+        <li class="sidebar-item">
+            <a href='/emergency-contacts/' class="sidebar-link">Contacts</a>
+        </li>
+        <li class="sidebar-item">
+            <a href='/reports/' class="sidebar-link">Reports</a>
+        </li>
+    </ul>
+</aside>
+
+<style>
+   
+    /* Sidebar styles */
+    .sidebar {
+        width: 250px; /* Set the width of the sidebar */
+        background-color: #f4f4f4; /* Light gray background */
+        padding: 20px; /* Padding around the content */
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        {% comment %} position: fixed; /* Fixed position */ {% endcomment %}
+        height: 100%; /* Full height */
+        overflow-y: auto; /* Scroll if content overflows */
+    }
+
+    .sidebar-menu {
+        list-style-type: none; /* Remove default list styling */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margin */
+    }
+
+    .sidebar-item {
+        margin: 15px 0; /* Space between items */
+    }
+
+    .sidebar-link {
+        text-decoration: none; /* Remove underline from links */
+        color: #333; /* Dark text color */
+        font-weight: bold; /* Bold text */
+        padding: 10px; /* Padding around the link */
+        display: block; /* Make the link fill the item */
+        border-radius: 4px; /* Rounded corners */
+        transition: background-color 0.3s; /* Smooth background transition */
+    }
+
+    .sidebar-link:hover {
+        background-color: #e0e0e0; /* Change background on hover */
+    }
+</style>

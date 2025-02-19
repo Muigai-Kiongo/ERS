@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Emergency Response System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   
+</head>
+<body>
+    
+    {%include 'components/header.html'%}
+    <main>
+        <form method="post" class='form-container'>
+            <h2>Register</h2>
+            {% csrf_token %}
+            <p>{{ form.username.label }} {{ form.username }}</p>
+            <p>{{ form.password1.label }} {{ form.password1 }}</p>
+            <p>{{ form.password2.label }} {{ form.password2 }}</p>
+            <p>Already have an Account? <a href='/accounts/login'>Sign In</a></p>
+            <button type="submit">Register</button>
+        </form>
+        
+    </main>
+
+</body>
+</html>
