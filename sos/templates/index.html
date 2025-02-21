@@ -1,27 +1,57 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}| Emergency Response System</title>
+    <title>{{ title }} | Emergency Response System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .content {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .get-started-button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .get-started-button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-{% include 'components/header.html' %}
-
+<div class='header'>
+    {% include 'components/header.html' %}
+</div>
 
 {% block content %}
+{% include 'components/float_buttons.html' %}
 
-{%include 'components/float_buttons.html'%}
-<p>
-    Welcome to Emergency Response System, a platform for Emergency Response Teams to communicate and track incidents.
-</p>
-<p> Be Alert always with us through learning, Tracking and Communication.
-Get Updated everyday with latest incidents and alerts and stay connected with Emergency Response System to keep you safe.
-
-</p>
-
-
-
+<div class="content">
+    
+    <h1>Welcome to the Emergency Response System</h1>
+    <p>
+        This platform is designed for Emergency Response Teams to communicate effectively and track incidents in real-time.
+    </p>
+    <p>
+        Stay alert and informed with our comprehensive tools for learning, tracking, and communication. 
+        Get daily updates on the latest incidents and alerts, ensuring you remain connected and safe.
+    </p>
+    <a href="/accounts/login/" class="get-started-button">Get Started</a>
+</div>
 
 {% endblock %}
-</body> 
+
+</body>
 </html>

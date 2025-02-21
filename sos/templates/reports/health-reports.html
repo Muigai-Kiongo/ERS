@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{%load static%}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% block content %}
+
+<div class='body-content'>
+    <nav class='navigation-bar'>
+        <button class="toggle-button" onclick="toggleNav()">☰</button>
+        {% include 'components/aside.html' %}
+    </nav>
+
+    <div class='main-content'>
+        <h2>CAUTION: ENSURE YOUR PERSONAL SAFETY BEFORE ANYTHING ELSE</h2>
+        <form method='post'>
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleNav() {
+        const nav = document.querySelector('.navigation-bar');
+        nav.classList.toggle('active');
+    }
+</script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    
+  
+    
+   
+    
+    h2 {
+        margin-top: 0;
+    }
+</style>
+
+{% endblock %}

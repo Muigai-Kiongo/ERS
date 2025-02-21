@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Emergency, EmergencyType, ResponseTeam, EmergencyContacts
 
-# Register your models here.
+admin.site.register(Emergency)
+admin.site.register(EmergencyType)
+admin.site.register(ResponseTeam)
+admin.site.register(EmergencyContacts)

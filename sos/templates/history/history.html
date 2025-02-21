@@ -1,36 +1,26 @@
 {%extends 'index.html'%}
-
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {%block content%}
+{% include 'components/float_buttons.html' %}
 
 <div class="container">
-    
-    {% include 'components/aside.html' %}
+  {% include 'components/aside.html' %}
 
-    <div class="main-content">
-
-
-        
-       
-    </div>
+  <div class="main-content"></div>
 </div>
 
 <style>
+  .container {
+    display: flex; /* Use flexbox for layout */
+    padding: 20px; /* Padding around the container */
+  }
 
-    .container {
-        display: flex; /* Use flexbox for layout */
-        padding: 20px; /* Padding around the container */
-    }
-
-    .main-content {
-        flex: 1; /* Allow main content to take available space */
-        margin-left: 20px; /* Space between aside and main content */
-        padding: 20px; /* Padding inside the main content */
-    }
-
-    
+  .main-content {
+    flex: 1; /* Allow main content to take available space */
+    margin-left: 20px; /* Space between aside and main content */
+    padding: 20px; /* Padding inside the main content */
+  }
 </style>
-
-
 
 {%endblock%}

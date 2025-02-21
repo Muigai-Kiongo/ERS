@@ -1,0 +1,153 @@
+body{
+    position: fixed;
+    width: 100%;
+}
+body,
+    h1,
+    h2,
+    h3,
+    p,
+    a,
+    button {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        border: none; /* Remove default button border */
+        background: none; /* Remove default button background */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+
+    header {
+        background-color:#a9203e; 
+        color: white; /* White text color */
+        padding: 20px 0; /* Padding for the header */
+        position: fixed; /* Make the header fixed */
+        top: 0; /* Position it at the top */
+        width: 100%; /* Full width */
+        z-index: 1000; /* Ensure it stays above other content */
+    }
+
+    .header-container {
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-around; /* Space between left and right sections */
+        align-items: center; /* Center items vertically */
+        max-width: 1200px; /* Max width for the header */
+        margin: 0 auto; /* Center the header */
+        padding: 0 20px; /* Padding on the sides */
+    }
+
+    .header-left {
+        display: flex; /* Use flexbox for logo and nav */
+        align-items: center; /* Center items vertically */
+    }
+
+    .logo img {
+        height: 50px; /* Set logo height */
+        margin-right: 20px; /* Space between logo and nav */
+    }
+
+    .body-content {
+        display: flex;
+        height: 100vh; /* Full height */
+    }
+
+    .navigation-bar {
+        width: 250px; /* Default width */
+        background-color: #333;
+        color: white;
+        transition: width 0.3s ease;
+        overflow: hidden; /* Hide overflow */
+    }
+    
+    .navigation-bar.active {
+        width: 60px; /* Width when toggled */
+    }
+    
+    .navigation-bar .toggle-button {
+        background-color: #444;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        display: block;
+        margin: 10px;
+    }
+    
+    .main-content {
+        flex-grow: 1; /* Take up remaining space */
+        padding: 20px;
+        background-color: #f4f4f4;
+        transition: margin-left 0.3s ease;
+    }
+    
+    .navigation-bar.active + .main-content {
+        margin-left: 60px; /* Adjust margin when nav is toggled */
+    }
+
+    .header-right {
+        display: flex; /* Use flexbox for user links */
+        align-items: center; /* Center items vertically */
+    }
+
+    .header-right a {
+        color: white; /* White text for user links */
+        padding: 10px 15px; /* Padding for user links */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    .header-right a:hover {
+        background-color: #555; /* Darker background on hover */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    /* Style for the logout button to match the links */
+    .logout-button {
+        color: white; /* White text for the button */
+        padding: 10px 15px; /* Same padding as links */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    .logout-button:hover {
+        background-color: #555; /* Darker background on hover */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    /* Add some padding to the body to prevent content from being hidden behind the fixed header */
+    body {
+        padding-top: 80px; /* Adjust this value based on the header height */
+    }
+
+/* Float Buttons */
+.nav {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-around; /* Space items evenly */
+    align-items: center; /* Center items vertically */
+    padding: 20px; /* Padding around the nav */
+    background-color: #f4f4f4; /* Light gray background */
+}
+
+.nav-item {
+    display: flex; /* Use flexbox for the item */
+    flex-direction: column; /* Stack icon and text vertically */
+    align-items: center; /* Center items horizontally */
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Dark text color */
+    padding: 15px; /* Padding around the item */
+    border-radius: 50%; /* Make the button round */
+    background-color: #ffffff; /* White background for buttons */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.nav-item:hover {
+    background-color: #e0e0e0; /* Change background on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.nav-icon {
+    width: 40px; /* Set a fixed width for icons */
+    height: 40px; /* Set a fixed height for icons */
+    margin-bottom: 5px; /* Space between icon and text */
+}
+
+

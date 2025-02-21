@@ -1,36 +1,40 @@
-{%extends 'index.html'%}
+{% extends 'index.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
 
+<div class='body-content'>
+    <nav class='navigation-bar'>
+        <button class="toggle-button" onclick="toggleNav()">☰</button>
+        {% include 'components/aside.html' %}
+    </nav>
 
-{%block content%}
-
-<div class="container">
-    
-    {% include 'components/aside.html' %}
-
-    <div class="main-content">
-
-
-        
-       
+    <div class='main-content'>
+        <h2>CAUTION: ENSURE YOUR PERSONAL SAFETY BEFORE ANYTHING ELSE</h2>
+        <form method='post'>
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
     </div>
 </div>
 
+<script>
+    function toggleNav() {
+        const nav = document.querySelector('.navigation-bar');
+        nav.classList.toggle('active');
+    }
+</script>
+
 <style>
-
-    .container {
-        display: flex; /* Use flexbox for layout */
-        padding: 20px; /* Padding around the container */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
     }
-
-    .main-content {
-        flex: 1; /* Allow main content to take available space */
-        margin-left: 20px; /* Space between aside and main content */
-        padding: 20px; /* Padding inside the main content */
-    }
-
     
+    
+    h2 {
+        margin-top: 0;
+    }
 </style>
 
-
-
-{%endblock%}
+{% endblock %}

@@ -21,7 +21,7 @@ class ResponseTeam(models.Model):
 class Emergency(models.Model):
     emergency_type = models.ForeignKey(EmergencyType,on_delete=models.CASCADE)
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     reported_at = models.DateTimeField(auto_now_add=True)
     resolved_at = models.DateTimeField(blank=True,null=True)
     assigned_teams = models.ManyToManyField(ResponseTeam,blank=True)
@@ -40,3 +40,12 @@ class Emergency(models.Model):
     def __str__(self):
         return f"{self.emergency_type} for {self.description} ({reported_at})"
     
+class EmergencyContacts(models.Model):
+    name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField(max_length=200)
+    emergency = models.ForeignKey(Emergency, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name}"
+        

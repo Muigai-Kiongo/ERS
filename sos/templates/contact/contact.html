@@ -1,22 +1,42 @@
-{%extends 'index.html'%}
+{% extends 'index.html' %}
 
+{% block content %}
 
-{%block content%}
+{% include 'components/float_buttons.html' %}
 
 <div class="container">
-    
     {% include 'components/aside.html' %}
 
     <div class="main-content">
+        <div class='btnToggle'>
+            <button id="personalBtn" class="active" onclick="toggleContacts('personal')">Personal Contacts</button>
+            <button id="stateBtn" onclick="toggleContacts('state')">State Contacts</button>
+            <button id="addContactBtn" onclick="addContact()">Add Contact</button>
+        </div>
 
+        <div id="personalContacts" class="contact-list">
+            <h2>Personal Emergency Contacts</h2>
+            <ul>
+                <li>John Doe - 123-456-7890</li>
+                <li>Jane Smith - 987-654-3210</li>
+                <!-- Add more personal contacts here -->
+            </ul>
+        </div>
 
-        
-       
+        <div id="stateContacts" class="contact-list" style="display: none;">
+            <h2>State Emergency Contacts</h2>
+            <ul>
+                <li>Fire Department: 911 <svg width="16" height="16" fill="red"><circle cx="8" cy="8" r="8"/></svg></li>
+                <li>Police Department: 911 <svg width="16" height="16" fill="blue"><circle cx="8" cy="8" r="8"/></svg></li>
+                <li>Ambulance: 911 <svg width="16" height="16" fill="green"><circle cx="8" cy="8" r="8"/></svg></li>
+                <li>Poison Control: 1-800-222-1222 <svg width="16" height="16" fill="orange"><circle cx="8" cy="8" r="8"/></svg></li>
+                <!-- Add more state contacts here -->
+            </ul>
+        </div>
     </div>
 </div>
 
 <style>
-
     .container {
         display: flex; /* Use flexbox for layout */
         padding: 20px; /* Padding around the container */
@@ -28,9 +48,61 @@
         padding: 20px; /* Padding inside the main content */
     }
 
-    
+    .btnToggle {
+        display: flex;
+        gap: 10px; /* Space between buttons */
+        margin-bottom: 20px; /* Space below the buttons */
+    }
+
+    .btnToggle button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #007BFF; /* Bootstrap primary color */
+        color: white;
+        transition: background-color 0.3s;
+    }
+
+    .btnToggle button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+    }
+
+    .btnToggle button.active {
+        background-color: #0056b3; /* Active button color */
+    }
+
+    .contact-list {
+        border: 1px solid #ccc; /* Border around contact list */
+        padding: 15px; /* Padding inside contact list */
+        border-radius: 5px; /* Rounded corners */
+    }
 </style>
 
+<script>
+    function toggleContacts(type) {
+        const personalContacts = document.getElementById('personalContacts');
+        const stateContacts = document.getElementById('stateContacts');
+        const personalBtn = document.getElementById('personalBtn');
+        const stateBtn = document.getElementById('stateBtn');
 
+        if (type === 'personal') {
+            personalContacts.style.display = 'block';
+            stateContacts.style.display = 'none';
+            personalBtn.classList.add('active');
+            stateBtn.classList.remove('active');
+        } else {
+            personalContacts.style.display = 'none';
+            stateContacts.style.display = 'block';
+            stateBtn.classList.add('active');
+            personalBtn.classList.remove('active');
+        }
+    }
 
-{%endblock%}
+    function addContact() {
+        // Logic to add a new personal contact
+        alert('Add contact functionality to be implemented.');
+    }
+</script>
+
+{% endblock %}
