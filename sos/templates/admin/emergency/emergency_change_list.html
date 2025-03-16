@@ -1,0 +1,10 @@
+{% extends "admin/change_list.html" %}
+{% block content %}
+    <h1>Emergency Reports</h1>
+    <form method="post" action="{% url 'admin:reports_view' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Generate Report</button>
+    </form>
+    {{ block.super }}
+{% endblock %}

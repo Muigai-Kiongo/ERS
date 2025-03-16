@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% include 'components/float_buttons.html' %}
+
+<div class="container mt-5 d-flex">
+    <nav class='navigation-bar'>
+        <button class="toggle-button" onclick="toggleNav()">☰</button>
+        {% include 'components/aside.html' %}
+    </nav>
+
+    <div class="main-content flex-grow-1">
+        <h1>
+            {% if form.instance.pk %}Edit{% else %}Add{% endif %} Emergency Contact
+        </h1>
+        <form method="post" class="contact-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'personal_emergency_contact' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        display: flex; /* Use flexbox for layout */
+        gap: 20px; /* Space between aside and main content */
+    }
+
+    .main-content {
+        flex-grow: 1; /* Allow main content to take available space */
+        padding: 20px; /* Padding inside the main content */
+        border: 1px solid #ccc; /* Border around main content */
+        border-radius: 5px; /* Rounded corners */
+        background-color: #f9f9f9; /* Light background color */
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column; /* Stack form elements vertically */
+        gap: 15px; /* Space between form elements */
+    }
+
+    .form-buttons {
+        display: flex;
+        gap: 10px; /* Space between buttons */
+        margin-top: 20px; /* Space above buttons */
+    }
+
+    .btn {
+        padding: 10px 15px; /* Padding for buttons */
+        border-radius: 5px; /* Rounded corners for buttons */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    .btn-success {
+        background-color: #28a745; /* Bootstrap success color */
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #218838; /* Darker shade on hover */
+    }
+
+    .btn-secondary {
+        background-color: #6c757d; /* Bootstrap secondary color */
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268; /* Darker shade on hover */
+    }
+</style>
+<script>
+    function toggleNav() {
+        const nav = document.querySelector('.navigation-bar');
+        nav.classList.toggle('active');
+    }
+</script>
+
+{% endblock %}

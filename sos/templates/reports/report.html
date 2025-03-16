@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class='body-content'>
+    <nav class='navigation-bar'>
+        <button class="toggle-button" onclick="toggleNav()">☰</button>
+        {% include 'components/aside.html' %}
+    </nav>
+
+    <div class='main-content'>
+        <h2>CAUTION: ENSURE YOUR PERSONAL SAFETY BEFORE ANYTHING ELSE</h2>
+        <form method='post' class="styled-form">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="error-message">{{ form.non_field_errors }}</div>
+            {% endif %}
+            
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}  <!-- Render the field without adding a class -->
+                    {% if field.errors %}
+                        <div class="error-message">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <button type='submit' class="submit-button">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleNav() {
+        const nav = document.querySelector('.navigation-bar');
+        nav.classList.toggle('active');
+    }
+</script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .styled-form {
+        padding: 20px;
+        max-width: 400px;
+        border: 1px solid #ccc; /* Optional: Add a border */
+        border-radius: 5px; /* Optional: Rounded corners */
+        background-color: #f9f9f9; /* Optional: Light background */
+    }
+
+    .form-group {
+        margin-bottom: 15px; /* Space between fields */
+    }
+
+    .error-message {
+        color: red; /* Red color for error messages */
+        font-size: 0.9em; /* Slightly smaller font */
+        margin-top: 5px; /* Space above error messages */
+    }
+
+    .submit-button {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+        background-color: #45a049; /* Darker green */
+    }
+</style>
+
+{% endblock %}

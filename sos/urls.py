@@ -7,10 +7,13 @@ urlpatterns = [
     path('first-aid/',views.first_aid, name='aid'),
     path('incidents/',views.incidents, name='emergecies'),
     path('history/', views.history, name ='history'),
-    path('emergency-contacts/', views.emergency_contacts, name='emergency_contact'),
-    path('fire-reports/',views.fire_reports, name='fire-reports'),
-    path('health-reports/',views.health_reports, name='health-reports'),
-    path('disaster-reports/',views.disaster_reports, name='disaster-reports'),
-    path('security-reports/',views.security_reports, name='security-reports'),  
-    path('other-reports/', views.other_reports, name='other-reports'),  
+    path('emergency-contacts/', views.emergency_contacts, name='personal_emergency_contact'),
+    path('emergency-contacts/create/', views.emergency_contacts_create, name='personal_emergency_contacts_create'),
+    path('emergency-contacts/update/<int:pk>/', views.emergency_contacts_update, name='personal_emergency_contacts_update'),
+    path('emergency-contacts/delete/<int:pk>/', views.emergency_contacts_delete, name='personal_emergency_contacts_delete'),
+    path('report/', views.report, name='report'),  
+    path('report/overview/', views.reports_view, name = 'reports-overview'),
+    path('reports/download/<str:report_type>/', views.download_report, name='download_report'),
+ 
+    
 ]

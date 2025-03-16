@@ -1,0 +1,35 @@
+<section>
+    <div class="container">
+
+        <div class="report-container">
+            {% if emergencies %}
+                <h2>Emergencies Reported This Month</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Reported At</th>
+                            <th>User</th>
+                            <th>Emergency Type</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emergency in emergencies %}
+                        <tr>
+                            <td>{{ emergency.reported_at|date:"Y-m-d H:i" }}</td>
+                            <td>{{ emergency.reported_by.username }}</td>
+                            <td>{{ emergency.emergency_type.name }}</td>
+                            <td>{{ emergency.description }}</td>
+                            <td>{{ emergency.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No emergencies reported this month. Please generate a report.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+

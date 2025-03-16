@@ -1,19 +1,20 @@
 {% extends 'index.html' %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 {% block content %}
 
-<div class='body-content'>
+<div class="container mt-5">
     <nav class='navigation-bar'>
         <button class="toggle-button" onclick="toggleNav()">☰</button>
         {% include 'components/aside.html' %}
     </nav>
 
-    <div class='main-content'>
-        <h2>CAUTION: ENSURE YOUR PERSONAL SAFETY BEFORE ANYTHING ELSE</h2>
-        <form method='post'>
+    <div class="main-content">
+        <h1>Delete Emergency Contact</h1>
+        <p>Are you sure you want to delete "{{ contact.name }}"?</p>
+        <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            <a href="{% url 'personal_emergency_contact' %}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>
@@ -24,17 +25,5 @@
         nav.classList.toggle('active');
     }
 </script>
-
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-    }
-    
-    
-    h2 {
-        margin-top: 0;
-    }
-</style>
 
 {% endblock %}

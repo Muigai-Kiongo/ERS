@@ -1,0 +1,40 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<h2>Emergency Contacts</h2>
+
+<div class="table-container">
+    <h3>Contact List ({{ contacts.count }})</h3>
+    <table id="contactTable">
+        <thead>
+            <tr>
+                <th><strong>Name</strong></th>
+                <th><strong>Phone</strong></th>
+                <th><strong>Email</strong></th>
+                <th><strong>Actions</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.email }}</td>
+                <td>
+                    <a href="{% url 'emergency_contacts_update' contact.pk %}">Edit</a> |
+                    <a href="{% url 'emergency_contacts_delete' contact.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No contacts available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="search-container">
+    <a href="{% url 'emergency_contacts_create' %}" class="form-btn">Add New Contact</a>
+</div>
+{% endblock %}

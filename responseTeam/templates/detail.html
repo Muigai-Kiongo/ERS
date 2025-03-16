@@ -1,0 +1,56 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Incident Detail</h1>
+
+<h2>{{ incident.title }}</h2>
+<p><strong>Status:</strong> {{ incident.status }}</p>
+<p><strong>Description:</strong> {{ incident.description }}</p>
+<p><strong>Reported By:</strong> {{ incident.reported_by }}</p>
+<p><strong>Reported At:</strong> {{ incident.reported_at }}</p>
+<p><strong>Emergency Type:</strong> {{ incident.emergency_type }}</p>
+
+<h3>Assign Response Team</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ assign_form.as_p }}
+    <button type="submit">Assign Team</button>
+</form>
+
+<h3>Change Status</h3>
+<form method="post">
+    {% csrf_token %}
+    <select name="status">
+        <option value="Pending" {% if incident.status == "Pending" %}selected{% endif %}>Pending</option>
+        <option value="In Progress" {% if incident.status == "In Progress" %}selected{% endif %}>In Progress</option>
+        <option value="Resolved" {% if incident.status == "Resolved" %}selected{% endif %}>Resolved</option>
+        <option value="Closed" {% if incident.status == "Closed" %}selected{% endif %}>Closed</option>
+    </select>
+    <button type="submit">Update Status</button>
+</form>
+
+<h3>Response Teams</h3>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in incident.response_teams.all %}
+            <tr>
+                <td>{{ team.name }}</td>
+                <td>{{ team.contact_info }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No response teams assigned yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

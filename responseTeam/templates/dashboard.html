@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Response Team</title>
+    <style>
+        /* Your existing styles */
+        html, body {
+            height: 100%; /* Ensure full height */
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f4f7fa; /* Light background color for the whole page */
+            position: relative; /* Changed from fixed to relative */
+        }
+
+        header {
+            color: #fff;
+            margin: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 20px;
+        }
+
+        .subnav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: #444;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .subnav a {
+            text-decoration: none;
+            padding: 10px 15px;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .subnav a:hover {
+            background-color: #555;
+            border-radius: 5px; /* Rounded corners for hover effect */
+        }
+
+        .body-content {
+            display: flex; /* Use flexbox for layout */
+            height: calc(100% - 80px); /* Adjust height to fit the navbar and subnav */
+            margin: 0; /* Remove margin */
+        }
+
+        .aside {
+            flex: 1; /* Flex-grow for aside */
+            border-right: 2px solid #ccc; /* Right border for separation */
+            heigth:100%;
+        }
+
+        .content {
+            flex: 3; /* Flex-grow for main content */
+            padding: 20px; /* Padding for content */
+            background-color: #ffffff; /* White background for content */
+            overflow-y: auto; /* Enable vertical scrolling */
+            height: 100%; /* Full height for content */
+        }
+
+        h2 {
+            color: #333; /* Darker color for headings */
+            margin-top: 20px;
+        }
+
+        .table-container {
+            max-height: 400px; /* Set a maximum height for the table */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Hide horizontal scrolling */
+            border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+            margin: 20px 0; /* Optional: Add some margin */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0; /* Remove margin */
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        tr:active {
+            background-color: #e0e0e0;
+        }
+
+        .form-btn {
+            margin-left: 20px;
+        }
+
+        button {
+            background-color: #dc3545; /* Red color for logout button */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="body-content">
+        <div class="aside">
+            {% include 'components/staff_aside.html' %}
+        </div>
+
+        <div class="content">
+            <div class="container">
+                {% block content %}
+                <div class="table-container">
+                    <h2>Incidents ({{ incidents.count }})</h2>
+                    <table id="incidentTable">
+                        <thead>
+                            <tr>
+                                <th><strong>Emergency Type:</strong></th>
+                                <th><strong>Reported By:</strong></th>
+                                <th><strong>Description:</strong></th>
+                                <th><strong>Time:</strong></th>
+                                <th><strong>Status:</strong></th>
+                                <th><strong>Assigned Team:</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for incident in incidents %}
+                            <tr onclick="window.location='{% url 'incidents_detail' incident.pk %}'">
+                                <td>{{ incident.emergency_type }}</td>
+                                <td>{{ incident.reported_by }}</td>
+                                <td>{{ incident.description }}</td>
+                                <td>{{ incident.reported_at }}</td>
+                                <td>{{ incident.status }}</td>
+                                <td>{{ incident.assigned_team }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6">No incidents reported yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,13 +9,22 @@
 
 <div class="container">
     
-    {% include 'components/aside.html' %}
+    <nav class='navigation-bar'>
+        <button class="toggle-button" onclick="toggleNav()">☰</button>
+        {% include 'components/aside.html' %}
+    </nav>
 
-    <div class="main-content">
+    <div class="safety-main-content">
 
-
+        <h3 class="safety-tips-title">Safety Tips</h3>
+        <ul class="safety-tips-list">
+            {% for tip in tips %}
+                <li class="safety-tip-item">{{ tip.tip }}</li>
+            {% empty %}
+                <li class="safety-no-tips">No tips available.</li>
+            {% endfor %}
+        </ul>
         
-       
     </div>
 </div>
 
@@ -23,17 +32,45 @@
 
     .container {
         display: flex; /* Use flexbox for layout */
-        padding: 20px; /* Padding around the container */
+        gap: 20px; /* Space between aside and main content */
     }
 
-    .main-content {
+  
+
+    .safety-tips-container {
+        display: flex; /* Use flexbox for layout */
+        gap: 20px; /* Space between aside and main content */
+    }
+
+    .safety-main-content {
         flex: 1; /* Allow main content to take available space */
         margin-left: 20px; /* Space between aside and main content */
         padding: 20px; /* Padding inside the main content */
     }
 
-    
+    .safety-tips-title {
+        font-size: 24px; /* Title font size */
+        margin-bottom: 15px; /* Space below the title */
+    }
+
+    .safety-tips-list {
+        list-style-type: disc; /* Bullet points for the list */
+        padding-left: 20px; /* Indentation for list items */
+    }
+
+    .safety-tip-item {
+        margin-bottom: 10px; /* Space between list items */
+    }
+
+    .safety-no-tips {
+        color: gray; /* Color for the no tips message */
+    }
 </style>
 
-
+<script>
+    function toggleNav() {
+        const nav = document.querySelector('.navigation-bar');
+        nav.classList.toggle('active');
+    }
+</script>
 {%endblock%}

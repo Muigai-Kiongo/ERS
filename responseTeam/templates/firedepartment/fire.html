@@ -1,0 +1,102 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<h2>Fire Department</h2>
+
+<h3>Incidents</h3>
+<div class="table-container">
+    <table id="incidentTable">
+        <thead>
+            <tr>
+                <th><strong>Emergency Type:</strong></th>
+                <th><strong>Reported By:</strong></th>
+                <th><strong>Description:</strong></th>
+                <th><strong>Time:</strong></th>
+                <th><strong>Status:</strong></th>
+                <th><strong>Assigned Team:</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for incident in incidents %}
+            <tr style="cursor: pointer" onclick="window.location='{% url 'incidents_detail' incident.pk %}'">
+                <td>{{ incident.emergency_type }}</td>
+                <td>{{ incident.reported_by }}</td>
+                <td>{{ incident.description }}</td>
+                <td>{{ incident.reported_at }}</td>
+                <td>{{ incident.status }}</td>
+                <td>{{ incident.assigned_team }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No incidents reported yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h3>Aid Tips</h3>
+<ul>
+    {% for tip in tips %}
+        <li>{{ tip.tip }}</li>
+    {% empty %}
+        <li>No aid tips available.</li>
+    {% endfor %}
+</ul>
+
+<style>
+    .add-tip-form {
+        margin-top: 20px;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    form {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        gap: 10px; /* Space between input and button */
+    }
+
+    .form-group {
+        flex: 1; /* Take up remaining space */
+        margin-bottom: 0; /* Remove margin for inline layout */
+    }
+
+    .form-control {
+        width: 100%; /* Full width for input */
+        padding: 8px; /* Reduced padding for a smaller input box */
+        border: 1px solid #ddd; /* Border for input */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 14px; /* Font size */
+        height: 40px; /* Minimized height for the input box */
+        resize: none; /* Disable resizing */
+    }
+
+    .add-tip-form button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 15px; /* Button padding */
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-tip-form button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+</style>
+
+<h3>Add Aid Tip</h3>
+<div class="add-tip-form">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="{{ form.tip.name }}" id="{{ form.tip.id_for_label }}" class="form-control" value="{{ form.tip.value|default:'' }}" required>
+        </div>
+        <button type="submit">Add Tip</button>
+    </form>
+</div>
+{% endblock %}

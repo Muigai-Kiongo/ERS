@@ -1,0 +1,15 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<h2>Update Emergency Contact</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Contact</button>
+</form>
+
+<div class="search-container">
+    <a href="{% url 'emergency_contacts_list' %}" class="form-btn">Back to Contact List</a>
+</div>
+{% endblock %}
