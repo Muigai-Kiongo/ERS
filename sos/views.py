@@ -35,6 +35,9 @@ def emergency_contacts(request):
         'sos':sos
         })
 
+def donations(request):
+    return render(request, 'donations.html')
+
 @login_required
 def emergency_contacts_create(request):
     if request.method == 'POST':

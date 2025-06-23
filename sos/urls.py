@@ -14,6 +14,6 @@ urlpatterns = [
     path('report/', views.report, name='report'),  
     path('report/overview/', views.reports_view, name = 'reports-overview'),
     path('reports/download/<str:report_type>/', views.download_report, name='download_report'),
- 
+    path('donations/', views.donations, name='donate')
     
 ]

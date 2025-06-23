@@ -1,27 +1,27 @@
 {% load static %}
-   
+
 <header>
-    <div class="header-container">
-        <div class="header-left">
-            <a href="/home/" class="logo">
-                <img src="{% static 'img/ERS-logo.png' %}" alt="logo" />
-            </a>
-            
-           <h1> Emergency Response System</h1>
-            
-        </div>
-        <div class="header-right">
-            {% if user.is_authenticated %}
-            <h3>{{user.username}}</h3>
-            {% csrf_token %}
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="logout-button">Logout</button>
-            </form>
-            {% else %}
-            <a href="/accounts/login" class="login">Login</a>
-            <a href="/accounts/register" class="register">Register</a>
-            {% endif %}
-        </div>
+  <div class="header-container">
+    <div class="header-left">
+      <a href="/home/" class="logo">
+        <img src="{% static 'img/ERS-logo.png' %}" alt="logo" />
+      </a>
+
+      <h1>Emergency Response System</h1>
     </div>
+    <div class="header-right">
+      {% if user.is_authenticated %}
+      <h3>{{user.username}}</h3>
+      {% csrf_token %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+      {% else %}
+      <a href="/accounts/login" class="login">Login</a>
+      <a href="/accounts/register" class="register">Register</a>
+      {% endif %}
+    </div>
+    <a href="{%url 'donate'%}">Donate</a>
+  </div>
 </header>

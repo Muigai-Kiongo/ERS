@@ -1,11 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} | Emergency Response System</title>
-   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,17 +18,20 @@
             justify-content: center;
             height: 100vh;
         }
+
         .header {
             width: 100%;
             color: white;
             text-align: center;
         }
+
         .typewriter {
             font-size: 24px;
             color: #007bff;
             text-align: center;
             margin-bottom: 20px;
         }
+
         .form-container {
             background-color: #ffffff;
             border-radius: 8px;
@@ -36,21 +40,26 @@
             width: 300px;
             text-align: center;
         }
+
         .form-container h2 {
             margin-bottom: 20px;
             color: #007bff;
         }
+
         .form-container p {
             margin-top: 10px;
             font-size: 14px;
         }
+
         .form-container a {
             color: #007bff;
             text-decoration: none;
         }
+
         .form-container a:hover {
             text-decoration: underline;
         }
+
         .logBtn {
             background-color: #28a745;
             color: white;
@@ -61,14 +70,16 @@
             font-weight: bold;
             transition: background-color 0.3s;
             width: 100%;
-        }        
+        }
+
         .logBtn:hover {
             background-color: #218838;
         }
     </style>
 </head>
+
 <body>
-    
+
     {%include 'components/header.html'%}
     <h2 class='typewriter'>Create an Account Here!</h2>
     <main>
@@ -77,12 +88,14 @@
             {% csrf_token %}
             <p>{{ form.username.label }} {{ form.username }}</p>
             <p>{{ form.password1.label }} {{ form.password1 }}</p>
-            <p>{{ form.password1.label }} {{ form.password1 }}</p>
+            <p>{{ form.password1.label }} {{ form.password2 }}</p>
             <p>Already have an Account? <a href='/accounts/login'>Sign In</a></p>
-            <button  class="logBtn" type="submit">Register</button>
+            <button class="logBtn" type="submit">Register</button>
+
         </form>
-        
+
     </main>
 
 </body>
+
 </html>

@@ -4,25 +4,22 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 
-def signUp (request):
+def signUp(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            redirect('login')
-            messages.success(request, ('Registration successful!'))
-            return redirect('stats')
+            messages.success(request, 'Registration successful!')
+            return redirect('stats')  # Redirect to the stats page after successful registration
+        else:
+            # If the form is invalid, it will contain errors
+            messages.error(request, 'Please correct the errors below.')
     else:
-
         form = UserCreationForm()
-
-        context= {
-            'form':form,
-            'title': 'Register'
-        }
-
+    context = {
+        'form': form,
+        'title': 'Register'
+    }
     return render(request, 'registration/register.html', context)
 
 class UserEditForm(forms.ModelForm):
