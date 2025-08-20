@@ -3,36 +3,127 @@
 {% block content %}
 <div class="container">
     <h1>Incident Detail</h1>
+  
+    <style>
+        .message-container {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 1000;
+          max-width: 400px;
+        }
+        
+        .message-alert {
+          padding: 15px 20px;
+          border-radius: 8px;
+          margin-bottom: 15px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          display: flex;
+          align-items: center;
+          animation: slideIn 0.3s ease-out;
+          font-size: 14px;
+        }
+        
+        .message-alert.success {
+          background: #d4edda;
+          color: #155724;
+          border-left: 4px solid #28a745;
+        }
+        
+        .message-alert.error {
+          background: #f8d7da;
+          color: #721c24;
+          border-left: 4px solid #dc3545;
+        }
+        
+        .message-alert.info {
+          background: #d1ecf1;
+          color: #0c5460;
+          border-left: 4px solid #17a2b8;
+        }
+        
+        .message-alert.warning {
+          background: #fff3cd;
+          color: #856404;
+          border-left: 4px solid #ffc107;
+        }
+        
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .close-btn {
+          margin-left: auto;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 18px;
+          color: inherit;
+          opacity: 0.7;
+        }
+        </style>
+        
+        <div class="message-container">
+          {% for message in messages %}
+          <div class="message-alert {{ message.tags }}">
+            {{ message }}
+            <button class="close-btn" onclick="this.parentElement.remove()">&times;</button>
+          </div>
+          {% endfor %}
+        </div>
+        
+  
+    <h2>{{ incident.title }}</h2>
+    <div class="incident-info">
+      <p><strong>Status:</strong> {{ incident.status }}</p>
+      <p><strong>Description:</strong> {{ incident.description }}</p>
+      <p><strong>Reported By:</strong> {{ incident.reported_by }}</p>
+      <p><strong>Reported At:</strong> {{ incident.reported_at }}</p>
+      <p><strong>Emergency Type:</strong> {{ incident.emergency_type }}</p>
+  
+      <p>
+        <strong>Assigned Team:</strong>
+        {% if incident.assigned_team %} {{ incident.assigned_team.name }} {% else
+        %} Not assigned yet {% endif %}
+      </p>
+    </div>
+  
+    <hr />
+  
+    <h3>Assign Response Team</h3>
+    <form method="post" class="assign-team-form">
+      {% csrf_token %}
+      <input type="hidden" name="assign_team" value="1" />
+      {{ assign_form.as_p }}
+      <button type="submit" class="btn btn-primary">Assign Team</button>
+    </form>
+  
+ 
 
-<h2>{{ incident.title }}</h2>
-<p><strong>Status:</strong> {{ incident.status }}</p>
-<p><strong>Description:</strong> {{ incident.description }}</p>
-<p><strong>Reported By:</strong> {{ incident.reported_by }}</p>
-<p><strong>Reported At:</strong> {{ incident.reported_at }}</p>
-<p><strong>Emergency Type:</strong> {{ incident.emergency_type }}</p>
+    <hr>
 
-<h3>Assign Response Team</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ assign_form.as_p }}
-    <button type="submit">Assign Team</button>
-</form>
+    <h3>Change Status</h3>
+    <form method="post" class="change-status-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="status">Select Status:</label>
+            <select name="status" id="status" class="form-control">
+                <option value="Pending" {% if incident.status == "Pending" %}selected{% endif %}>Pending</option>
+                <option value="In Progress" {% if incident.status == "In Progress" %}selected{% endif %}>In Progress
+                </option>
+                <option value="Resolved" {% if incident.status == "Resolved" %}selected{% endif %}>Resolved</option>
+                <option value="Closed" {% if incident.status == "Closed" %}selected{% endif %}>Closed</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Update Status</button>
+    </form>
 
-<h3>Change Status</h3>
-<form method="post">
-    {% csrf_token %}
-    <select name="status">
-        <option value="Pending" {% if incident.status == "Pending" %}selected{% endif %}>Pending</option>
-        <option value="In Progress" {% if incident.status == "In Progress" %}selected{% endif %}>In Progress</option>
-        <option value="Resolved" {% if incident.status == "Resolved" %}selected{% endif %}>Resolved</option>
-        <option value="Closed" {% if incident.status == "Closed" %}selected{% endif %}>Closed</option>
-    </select>
-    <button type="submit">Update Status</button>
-</form>
+    <hr>
 
-<h3>Response Teams</h3>
+    <h3>Assigned Response Team</h3>
 <div class="table-container">
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -40,17 +131,19 @@
             </tr>
         </thead>
         <tbody>
-            {% for team in incident.response_teams.all %}
+            {% if incident.assigned_team %}
             <tr>
-                <td>{{ team.name }}</td>
-                <td>{{ team.contact_info }}</td>
+                <td>{{ incident.assigned_team.name }}</td>
+                <td>{{ incident.assigned_team.contact_info }}</td>
             </tr>
-            {% empty %}
+            {% else %}
             <tr>
-                <td colspan="2">No response teams assigned yet</td>
+                <td colspan="2">No response team assigned yet</td>
             </tr>
-            {% endfor %}
+            {% endif %}
         </tbody>
     </table>
+</div>
+
 </div>
 {% endblock %}

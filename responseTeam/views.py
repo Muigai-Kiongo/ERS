@@ -6,6 +6,8 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from weasyprint import HTML
 from django.utils import timezone
+from django.contrib import messages
+
 
 # Custom decorator to check if the user is a staff member
 def staff_member_required(view_func):
@@ -112,24 +114,28 @@ def disasterDepartment(request):
     }
     return render(request, 'disasterdepartment/disaster.html', context)
 
+
 @staff_member_required
 def incidents_detail(request, pk):
     incident = get_object_or_404(Emergency, pk=pk)
 
     if request.method == 'POST':
         # Handle response team assignment
-        assign_form = AssignResponseTeamForm(request.POST)
-        if assign_form.is_valid():
-            response_team = assign_form.cleaned_data['response_team']
-            incident.assigned_team = response_team.name  # Assuming 'assigned_team' is a CharField
-            incident.save()
-            return redirect('incidents_detail', pk=incident.pk)
+        if 'assign_team' in request.POST:
+            assign_form = AssignResponseTeamForm(request.POST)
+            if assign_form.is_valid():
+                response_team = assign_form.cleaned_data['response_team']
+                incident.assigned_team = response_team  # Make sure this is the team object, not just name
+                incident.save()
+                messages.success(request, 'Team assigned successfully!')
+                return redirect('incidents_detail', pk=incident.pk)
 
         # Handle status update
         if 'status' in request.POST:
             new_status = request.POST.get('status')
-            incident.status = new_status  # Assuming 'status' is a field in Emergency
+            incident.status = new_status
             incident.save()
+            messages.success(request, 'Status updated successfully!')
             return redirect('incidents_detail', pk=incident.pk)
     else:
         assign_form = AssignResponseTeamForm()
@@ -139,6 +145,8 @@ def incidents_detail(request, pk):
         'assign_form': assign_form,
     }
     return render(request, 'detail.html', context)
+
+
 
 @staff_member_required
 def emergency_contacts_list(request):

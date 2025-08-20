@@ -45,7 +45,13 @@ class Emergency(models.Model):
     description = models.TextField(blank=True)
     reported_at = models.DateTimeField(auto_now_add=True)
     resolved_at = models.DateTimeField(blank=True, null=True)
-    assigned_teams = models.ManyToManyField(ResponseTeam, blank=True)
+    assigned_team = models.ForeignKey(
+        'ResponseTeam', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name='assigned_emergencies'
+    )
 
     # Change location to a CharField with predefined choices
     location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default='location_1', help_text="Select the location of the emergency")

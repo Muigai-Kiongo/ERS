@@ -81,9 +81,12 @@ def first_aid(request):
     
 @login_required
 def stats(request):
-    total_emergencies = Emergency.objects.count()
-    emergencies_by_status = Emergency.objects.values('status').annotate(count=Count('id'))
-    emergencies_by_type = Emergency.objects.values('emergency_type__name').annotate(count=Count('id'))
+    # Filter emergencies by the logged-in user
+    user_emergencies = Emergency.objects.filter(reported_by=request.user)
+    
+    total_emergencies = user_emergencies.count()
+    emergencies_by_status = user_emergencies.values('status').annotate(count=Count('id'))
+    emergencies_by_type = user_emergencies.values('emergency_type__name').annotate(count=Count('id'))
     
     context = {
         'total_emergencies': total_emergencies,
