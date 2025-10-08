@@ -2,11 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import EmergencyReportForm,EmergencyContactsForm, PersonalEmergencyContactsForm, ReportForm
 from django.contrib.auth.decorators import login_required
 from .models import Emergency, PersonalEmergencyContacts, EmergencyContacts, AidTip
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 from django.conf import settings
-from twilio.rest import Client
 from django.db.models import Count
 from django.template.loader import render_to_string
 from django.http import HttpResponse
@@ -123,39 +122,46 @@ def report(request):
         form = EmergencyReportForm(request.POST)
         if form.is_valid():
             emergency = form.save(commit=False)
-            emergency.reported_by = request.user  # Set the user who reported the emergency
-            emergency.save()  # Save the emergency instance
-            form.save_m2m()  # Save the many-to-many relationships
-            
-            # Prepare email content
-            subject = 'New Emergency Report Submitted'
+            emergency.reported_by = request.user
+            emergency.save()
+            form.save_m2m()
+
+            # Prepare email
+            subject = '🚨 New Emergency Report Submitted'
             emergency_type = form.cleaned_data['emergency_type']
             description = form.cleaned_data['description']
             location = form.cleaned_data['location']
 
-            # Create a cleaner message
-            message = f"""
-            A new emergency report has been submitted by {request.user.username}.
+            message = (
+                f"A new emergency report has been submitted by {request.user.username}.\n\n"
+                f"Details:\n"
+                f"Type of Emergency: {emergency_type}\n"
+                f"Description: {description}\n"
+                f"Location: {location}\n\n"
+                f"Please review the report."
+            )
 
-            Details:
-            Type of Emergency: {emergency_type}
-            Description: {description}
-            Location: {location}
+            recipient_list = list(
+                User.objects.filter(is_staff=True)
+                .exclude(email='')
+                .values_list('email', flat=True)
+            )
 
-            Please review the report.
-            """
-            recipient_list = User.objects.filter(is_staff=True).values_list('email', flat=True)
+            if recipient_list:
+                try:
+                    send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+                except Exception as e:
+                    # Log this or show a user-friendly message
+                    print(f"Error sending email: {e}")
 
-            # Send the email
-            send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+            return redirect('aid')  # ✅ now returned
 
     else:
         form = EmergencyReportForm()
 
-    context = {
-        'form': form,
-    }
-    return render(request, 'reports/report.html', context)
+    return render(request, 'reports/report.html', {'form': form})
 
 @login_required  # Ensure the user is logged in
 def reports_view(request):
